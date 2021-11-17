@@ -7,8 +7,13 @@ Date: 2020-05-08
 Author: Juan C. Vidal,
   Marcos Matabuena
 Maintainer: Juan C. Vidal <juan.vidal@usc.es>
-Description: Biosensor.usc aims to provide a unified and user-friendly framework for using new distributional representations of biosensors data in different statistical modeling tasks: regression models, hypothesis testing, cluster analysis, visualization, and descriptive analysis.
-Distributional representations are a functional extension of compositional time-range metrics and we have used them successfully so far in modeling glucose profiles and accelerometer data. However, these functional representations can be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
+Description: Biosensor.usc aims to provide a unified and user-friendly framework for using new 
+             distributional representations of biosensors data in different statistical modeling 
+             tasks: regression models, hypothesis testing, cluster analysis, visualization, and 
+             descriptive analysis. Distributional representations are a functional extension of 
+             compositional time-range metrics and we have used them successfully so far in modeling 
+             glucose profiles and accelerometer data. However, these functional representations can 
+             be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
 License: GPL-2
 Imports: Rcpp, graphics, stats, utils, energy, fda.usc, parallelDist, doParallel
 Depends: R (>= 2.15)

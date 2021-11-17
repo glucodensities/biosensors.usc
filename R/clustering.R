@@ -28,7 +28,7 @@
 #' @param restarts Number of restarts.
 #' @return An object of class kgroups (see energy library).
 #' @usage
-#' energy_clustering(data, clusters = 3, iter_max = 10, restarts = 1)
+#' clustering(data, clusters = 3, iter_max = 10, restarts = 1)
 #' @export
 clustering <- function(data, clusters = 3, iter_max = 10, restarts = 1) {
   if (!is(data, "biosensor"))

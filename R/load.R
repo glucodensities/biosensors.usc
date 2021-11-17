@@ -26,6 +26,8 @@
 #' @param filename_fdata The csv file with the functional data.
 #' @param filename_variables The csv file with the clinical variables.
 #' @return A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
+#' @examples
+#' X = load_data("./test/data_1.csv", "./test/variables_1.csv")
 #' @export
 load_data <- function(filename_fdata, filename_variables) {
 
@@ -107,9 +109,6 @@ load_density_data <- function(df, t) {
 #' @return A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
 #' @examples
 #' X = generate_data(n=100, Qp=100, Xp=5)
-#' class(X)
-#' X$densities
-#' X$quantiles
 #' @export
 generate_data <- function(n=100, Qp=100, Xp=5) {
   if (n <= 0)

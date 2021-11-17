@@ -21,7 +21,4 @@ Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a tr
 }
 \examples{
 X = generate_data(n=100, Qp=100, Xp=5)
-class(X)
-X$densities
-X$quantiles
 }

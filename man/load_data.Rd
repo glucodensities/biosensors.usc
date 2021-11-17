@@ -17,3 +17,6 @@ A biosensors.usc object with the fdata densities and quantiles, and the datafram
 \description{
 Loads the glocodensities from two csv files.
 }
+\examples{
+X = load_data("./test/data_1.csv", "./test/variables_1.csv")
+}

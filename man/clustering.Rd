@@ -4,7 +4,7 @@
 \alias{clustering}
 \title{clustering_energy}
 \usage{
-energy_clustering(data, clusters = 3, iter_max = 10, restarts = 1)
+clustering(data, clusters = 3, iter_max = 10, restarts = 1)
 }
 \arguments{
 \item{data}{A gl object.}
