@@ -40,7 +40,10 @@ vignettes/*.pdf
 
 .Rbuildignore
 
-biosensors.usc.Rproj
+.gitignore
+.git/
+
+*.Rproj
 
 src/*.o
 src/*.so
