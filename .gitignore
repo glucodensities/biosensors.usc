@@ -40,6 +40,8 @@ vignettes/*.pdf
 
 .Rbuildignore
 
+biosensors.usc.Rproj
+
 src/*.o
 src/*.so
 src/*.dll
