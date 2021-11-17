@@ -1,0 +1,31 @@
+Package: biosensors.usc
+Encoding: UTF-8
+Type: Package
+Title: biosensors.usc package
+Version: 1.0
+Date: 2020-05-08
+Author: Juan C. Vidal,
+  Marcos Matabuena
+Maintainer: Juan C. Vidal <juan.vidal@usc.es>
+Description: Biosensor data have the potential to improve disease control and detection. However, 
+             the analysis of these data under free-living conditions is not feasible with current 
+             statistical techniques. To address this challenge, we introduce a new functional 
+             representation of biosensor data, termed the glucodensity, together with a data 
+             analysis framework based on distances between them. The new data analysis procedure 
+             is illustrated through an application in diabetes with continuous-time glucose 
+             monitoring (CGM) data. In this domain, we show marked improvement with respect to 
+             state-of-the-art analysis methods. In particular, our findings demonstrate that (i) 
+             the glucodensity possesses an extraordinary clinical sensitivity to capture the 
+             typical biomarkers used in the standard clinical practice in diabetes; (ii) previous 
+             biomarkers cannot accurately predict glucodensity, so that the latter is a richer 
+             source of information and; (iii) the glucodensity is a natural generalization of the 
+             time in range metric, this being the gold standard in the handling of CGM data. 
+             Furthermore, the new method overcomes many of the drawbacks of time in range metrics 
+             and provides more indepth insight into assessing glucose metabolism.
+License: GPL-2
+Imports: Rcpp, graphics, stats, utils, energy, fda.usc, parallelDist, doParallel
+Depends: R (>= 2.15)
+LinkingTo: Rcpp, RcppArmadillo
+LazyLoad: Yes
+NeedsCompilation: Yes
+RoxygenNote: 7.1.1
