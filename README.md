@@ -5,7 +5,7 @@ Distributional representations are a functional extension of compositional time-
 
 Please use reference [1] to cite this package.
 
-**References:**
+**Bibliography:**
 
 1. Matabuena, M., Petersen, A., Vidal, J. C., & Gude, F. (2021). Glucodensities: A new representation of glucose profiles using distributional data analysis. Statistical methods in medical research, 0962280221998064.
 
