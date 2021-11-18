@@ -10,3 +10,4 @@ Please use reference [1] to cite this package.
 1. Matabuena, M., Petersen, A., Vidal, J. C., & Gude, F. (2021). Glucodensities: A new representation of glucose profiles using distributional data analysis. Statistical methods in medical research, 0962280221998064.
 
 2. Matabuena, M., & Petersen, A. (2021). Distributional data analysis with accelerometer data in a NHANES database with nonparametric survey regression models. arXiv preprint arXiv:2104.01165.
+a
