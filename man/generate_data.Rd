@@ -14,11 +14,19 @@ generate_data(n = 100, Qp = 100, Xp = 5)
 \item{Xp}{Dimension of covariates where X_i~Unif(0,1).}
 }
 \value{
-A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
+A biosensor object:
+\code{data} NULL.
+\code{densities} NULL.
+\code{quantiles} A functional data object (fdata) with the empirical quantile estimation.
+\code{variables} A data frame with Xp covariates.
 }
 \description{
-Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
+Generates a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
 }
 \examples{
-X = generate_data(n=100, Qp=100, Xp=5)
+data = generate_data(n=100, Qp=100, Xp=5)
+names(data)
+header(data$quantiles)
+header(data$variables)
+plot(quantiles, main="Quantile curves")
 }

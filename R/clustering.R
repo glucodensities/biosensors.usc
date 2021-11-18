@@ -20,15 +20,23 @@
 #' @importFrom energy kgroups
 #' @importFrom graphics par plot
 
-#' @title clustering_energy
-#' @description Performs kgroups clustering by energy distance of biosensors.usc.
-#' @param data A gl object.
+#' @title clustering
+#' @description Performs energy clustering with Wasserstein distance using quantile distributional representations as covariates.
+#' @param data A biosensor object.
 #' @param clusters Number of clusters.
 #' @param iter_max Maximum number of iterations.
 #' @param restarts Number of restarts.
-#' @return An object of class kgroups (see energy library).
+#' @return An object of class bclustering:
+#' \code{data} A data frame with biosensor raw data.
+#' \code{result} A kgroups object (see energy library).
 #' @usage
-#' clustering(data, clusters = 3, iter_max = 10, restarts = 1)
+#' clustering(data, clusters=3, iter_max=10, restarts=1)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' clus = clustering(data, clusters=3)
 #' @export
 clustering <- function(data, clusters = 3, iter_max = 10, restarts = 1) {
   if (!is(data, "biosensor"))

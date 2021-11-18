@@ -20,19 +20,26 @@
 #' @importFrom graphics par plot axis box mtext legend
 #' @importFrom stats complete.cases
 
-#' @title regression_analysis
-#' @description Performs an analysis of the performance of the regression vs a smoothing parameter.
+#' @title nadayara_regression
+#' @description Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
 #' @param data A biosensor object.
-#' @param predictor The name of the vector of observed values (one of the columns of data$variables).
-#' @return An object of class performance containing the components:
-#' \code{call} The function call
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' @param response The name of the scalar response. The response must be a column name in data$variables.
+#' @return An object of class bnadaraya:
+#' \code{nadaraya} ToDo
+#' \code{r2} ToDo
+#' \code{error} ToDo
+#' \code{data} ToDo
+#' \code{response} ToDo
+#' @usage
+#' nadayara_regression(data, response)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' nada = nadayara_regression(data, "BMI")
 #' @export
-nadayara_regression <- function(data, predictor) {
+nadayara_regression <- function(data, response) {
   if (!is(data, "biosensor"))
     stop("Error: data must be an object of biosensor class. @seealso biosensors.usc::load_data")
 
@@ -48,12 +55,12 @@ nadayara_regression <- function(data, predictor) {
   if (!is(data$variables, "data.frame"))
     stop("The data attribute variables must be of type matrix or array")
 
-  if (!(predictor %in% colnames(data$variables)))
-    stop("Error: predictor name is not a colname in data$variables.")
+  if (!(response %in% colnames(data$variables)))
+    stop("Error: response name is not a colname in data$variables.")
 
   nas <- tryCatch(
     {
-      !is.na(data$variables[, predictor])
+      !is.na(data$variables[, response])
     },
     error = function(e) {
       message("An error occured while computing the wassertein regression:\n", e)
@@ -65,7 +72,7 @@ nadayara_regression <- function(data, predictor) {
   n <- dim(X)[1]
   p <- dim(X)[2]
   t <- data$quantiles$argvals
-  Y <- data$variables[nas, predictor]
+  Y <- data$variables[nas, response]
 
   conjunto <- data.frame(X, Y)
   aux <- stats::complete.cases(conjunto)
@@ -148,7 +155,7 @@ nadayara_regression <- function(data, predictor) {
                    pch = c(1, 1), col = c("#0073C2FF", "#FC4E07")
   )
 
-  gd.regression <- list(nadayara = res, r2 = R2, error = cell.density, data = data, predictor = predictor)
+  gd.regression <- list(nadayara = res, r2 = R2, error = cell.density, data = data, response = response)
   class(gd.regression) <- "bnadaraya"
   return(gd.regression)
 }
@@ -157,16 +164,22 @@ nadayara_regression <- function(data, predictor) {
 
 
 #' @title nadayara_prediction
-#' @description Performs an analysis of the performance of the regression vs a smoothing parameter.
+#' @description Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
 #' @param data A biosensor object.
-#' @param predictor The name of the vector of observed values (one of the columns of data$variables).
-#' @return An object of class performance containing the components:
-#' \code{call} The function call
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' @param Qpred ToDo
+#' @param hs ToDo
+#' @return An object of class bnadarayapred:
+#' \code{prediction}
+#' \code{windows}
+#' @usage
+#' nadayara_prediction(data, response)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' nada = nadayara_regression(data, "BMI")
+#' npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
 #' @export
 nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
   if (!is(nadaraya, "bnadaraya"))
@@ -188,7 +201,7 @@ nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
   n <- dim(X)[1]
   p <- dim(X)[2]
   t <- nadaraya$data$quantiles$argvals
-  Y <- nadaraya$data$variables[, nadaraya$predictor]
+  Y <- nadaraya$data$variables[, nadaraya$response]
 
   Xtest= as.matrix(Qpred)
   nXtest= dim(Xtest)[1]
@@ -226,6 +239,6 @@ nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
   res <- cpp_nadayara_prediction(X, t, Y, hs, indices1, indices2)
 
   gd.pred <- list(prediction = res, windows = hs)
-  class(gd.pred) <- "bpred"
+  class(gd.pred) <- "bnadarayapred"
   return(gd.pred)
 }

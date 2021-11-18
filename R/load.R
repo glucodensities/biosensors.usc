@@ -22,14 +22,25 @@
 #' @importFrom truncnorm qtruncnorm
 
 #' @title load_data
-#' @description Loads the glocodensities from two csv files.
-#' @param filename_fdata The csv file with the functional data.
-#' @param filename_variables The csv file with the clinical variables.
-#' @return A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
+#' @description R function to read biosensors data from a csv files.
+#' @param filename_fdata A csv file with the functional data. The csv file must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure.
+#' @param filename_variables A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this indvidual.
+#' @return A biosensor object:
+#' \code{data} A data frame with biosensor raw data.
+#' \code{densities} A functional data object (fdata) with a non-parametric density estimation.
+#' \code{quantiles} A functional data object (fdata) with the empirical quantile estimation.
+#' \code{variables} A data frame with the covariates.
 #' @examples
-#' X = load_data("./test/data_1.csv", "./test/variables_1.csv")
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' names(data)
+#' header(data$quantiles)
+#' header(data$variables)
+#' plot(quantiles, main="Quantile curves")
 #' @export
-load_data <- function(filename_fdata, filename_variables) {
+load_data <- function(filename_fdata, filename_variables=NULL) {
 
   df <- process_data(filename_fdata)
 
@@ -45,7 +56,11 @@ load_data <- function(filename_fdata, filename_variables) {
   r1 <- load_density_data(df, t1)
   t2 <- seq(0, 1, length = 300)
   r2 <- load_quantile_data(df, t2)
-  r3 <- utils::read.csv(filename_variables)
+  r3 <- NULL
+  if (!is.null(filename_variables)) {
+    r3 <- utils::read.csv(filename_variables)
+    ######## ORDENAR VARIABLES IGUAL ORDEN Q DATOS
+  }
   data <- list(data = df, densities = r1, quantiles = r2, variables = r3)
   class(data) <- "biosensor"
   return(data)
@@ -95,20 +110,22 @@ load_density_data <- function(df, t) {
 }
 
 
-
-# n sample size
-# Qp dimension Quantile
-# Xp dimension covariates; X_i~Unif(0,1)
-# Quantile  Regresion model V+V2*v+tau*V2*Q0; Q0 truncated random variable; v=2*X; tau=2*X; V~Unif(-1,1); V2~Unif(-1,-1); V3~Unif(0.8,1.2) E(V|X)= tau*Q0;
-
 #' @title generate_data
-#' @description Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
+#' @description Generates a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
 #' @param n Sample size.
 #' @param Qp Dimension of the quantile.
 #' @param Xp Dimension of covariates where X_i~Unif(0,1).
-#' @return A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
+#' @return A biosensor object:
+#' \code{data} NULL.
+#' \code{densities} NULL.
+#' \code{quantiles} A functional data object (fdata) with the empirical quantile estimation.
+#' \code{variables} A data frame with Xp covariates.
 #' @examples
-#' X = generate_data(n=100, Qp=100, Xp=5)
+#' data = generate_data(n=100, Qp=100, Xp=5)
+#' names(data)
+#' header(data$quantiles)
+#' header(data$variables)
+#' plot(quantiles, main="Quantile curves")
 #' @export
 generate_data <- function(n=100, Qp=100, Xp=5) {
   if (n <= 0)

@@ -4,22 +4,28 @@
 \alias{nadayara_prediction}
 \title{nadayara_prediction}
 \usage{
-nadayara_prediction(nadaraya, Qpred, hs = NULL)
+nadayara_prediction(data, response)
 }
 \arguments{
-\item{data}{A biosensor object.}
+\item{Qpred}{ToDo}
 
-\item{predictor}{The name of the vector of observed values (one of the columns of data$variables).}
+\item{hs}{ToDo}
+
+\item{data}{A biosensor object.}
 }
 \value{
-An object of class performance containing the components:
-\code{call} The function call
-\code{error} The residuals.
-\code{prediction} The fitted regression.
-\code{ub} The upper band of the regression.
-\code{lb} The lower band of the regression.
-where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+An object of class bnadarayapred:
+\code{prediction}
+\code{windows}
 }
 \description{
-Performs an analysis of the performance of the regression vs a smoothing parameter.
+Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+nada = nadayara_regression(data, "BMI")
+npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
 }

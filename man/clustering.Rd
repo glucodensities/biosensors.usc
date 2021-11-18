@@ -2,12 +2,12 @@
 % Please edit documentation in R/clustering.R
 \name{clustering}
 \alias{clustering}
-\title{clustering_energy}
+\title{clustering}
 \usage{
-clustering(data, clusters = 3, iter_max = 10, restarts = 1)
+clustering(data, clusters=3, iter_max=10, restarts=1)
 }
 \arguments{
-\item{data}{A gl object.}
+\item{data}{A biosensor object.}
 
 \item{clusters}{Number of clusters.}
 
@@ -16,8 +16,17 @@ clustering(data, clusters = 3, iter_max = 10, restarts = 1)
 \item{restarts}{Number of restarts.}
 }
 \value{
-An object of class kgroups (see energy library).
+An object of class bclustering:
+\code{data} A data frame with biosensor raw data.
+\code{result} A kgroups object (see energy library).
 }
 \description{
-Performs kgroups clustering by energy distance of biosensors.usc.
+Performs energy clustering with Wasserstein distance using quantile distributional representations as covariates.
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+clus = clustering(data, clusters=3)
 }

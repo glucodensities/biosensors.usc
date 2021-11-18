@@ -4,19 +4,30 @@
 \alias{load_data}
 \title{load_data}
 \usage{
-load_data(filename_fdata, filename_variables)
+load_data(filename_fdata, filename_variables = NULL)
 }
 \arguments{
-\item{filename_fdata}{The csv file with the functional data.}
+\item{filename_fdata}{A csv file with the functional data. The csv file must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure.}
 
-\item{filename_variables}{The csv file with the clinical variables.}
+\item{filename_variables}{A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this indvidual.}
 }
 \value{
-A biosensors.usc object with the fdata densities and quantiles, and the dataframe with the variables.
+A biosensor object:
+\code{data} A data frame with biosensor raw data.
+\code{densities} A functional data object (fdata) with a non-parametric density estimation.
+\code{quantiles} A functional data object (fdata) with the empirical quantile estimation.
+\code{variables} A data frame with the covariates.
 }
 \description{
-Loads the glocodensities from two csv files.
+R function to read biosensors data from a csv files.
 }
 \examples{
-X = load_data("./test/data_1.csv", "./test/variables_1.csv")
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+names(data)
+header(data$quantiles)
+header(data$variables)
+plot(quantiles, main="Quantile curves")
 }
