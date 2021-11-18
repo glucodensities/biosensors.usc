@@ -110,7 +110,7 @@ Rcpp::List cpp_nadayara_regression(const arma::mat X, const arma::mat t, const a
 
   bio::nadaraya_struct result = bio::nadayara_regression(X, t, Y, hs, indices_1, indices_2);
   return Rcpp::List::create(
-    Rcpp::Named("coefficients") = result.coefficients,
+    Rcpp::Named("prediction")   = result.prediction,
     Rcpp::Named("residuals")    = result.residuals,
     Rcpp::Named("r2")           = result.r2,
     Rcpp::Named("error")        = result.error,

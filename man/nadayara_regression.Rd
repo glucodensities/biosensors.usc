@@ -13,14 +13,14 @@ nadayara_regression(data, response)
 }
 \value{
 An object of class bnadaraya:
-\code{nadaraya} ToDo
-\code{r2} ToDo
-\code{error} ToDo
-\code{data} ToDo
-\code{response} ToDo
+\code{prediction} The Nadaraya-Watson prediction for each point of the training data at each h=seq(0.8, 15, length=200).
+\code{r2} R2 estimation for the training data at each h=seq(0.8, 15, length=200).
+\code{error} Standard mean-squared error after applying leave-one-out cross-validation for the training data at each h=seq(0.8, 15, length=200).
+\code{data} A data frame with biosensor raw data.
+\code{response} The name of the scalar response.
 }
 \description{
-Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
+Functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
 }
 \examples{
 # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.

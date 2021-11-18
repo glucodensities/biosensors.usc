@@ -43,6 +43,7 @@
 load_data <- function(filename_fdata, filename_variables=NULL) {
 
   df <- process_data(filename_fdata)
+  id_quantiles <- unique(df$id)
 
   if (!("value" %in% colnames(df)))
     stop("The csv file filename_fdata must have a column named 'value'.")
@@ -60,6 +61,11 @@ load_data <- function(filename_fdata, filename_variables=NULL) {
   if (!is.null(filename_variables)) {
     r3 <- utils::read.csv(filename_variables)
     ######## ORDENAR VARIABLES IGUAL ORDEN Q DATOS
+    id_dataframe = c()
+    for (i in id_quantiles) {
+      id_dataframe = c(id_dataframe, which(r3$id == i))
+    }
+    r3 = r3[id_dataframe,]
   }
   data <- list(data = df, densities = r1, quantiles = r2, variables = r3)
   class(data) <- "biosensor"

@@ -7,19 +7,19 @@
 nadayara_prediction(data, response)
 }
 \arguments{
-\item{Qpred}{ToDo}
+\item{Qpred}{Quantile curves that will be used in the predictions}
 
-\item{hs}{ToDo}
+\item{hs}{Smoothing parameters for the predictions, by default hs = seq(0.8, 15, length = 200)}
 
 \item{data}{A biosensor object.}
 }
 \value{
 An object of class bnadarayapred:
-\code{prediction}
-\code{windows}
+\code{prediction} The Nadaraya-Watson prediction for the test data at each value of hs.
+\code{hs} Hs values used for the prediction.
 }
 \description{
-Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
+Functional non-parametric Nadaraya-Watson prediction with 2-Wasserstein distance.
 }
 \examples{
 # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
@@ -27,5 +27,6 @@ file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)
 nada = nadayara_regression(data, "BMI")
+# Example of prediction with the column mean of quantiles
 npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
 }

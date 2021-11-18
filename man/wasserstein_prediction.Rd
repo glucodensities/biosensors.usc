@@ -4,21 +4,26 @@
 \alias{wasserstein_prediction}
 \title{wasserstein_prediction}
 \usage{
-wasserstein_prediction(reg, xpred)
+wasserstein_prediction(regression, xpred)
 }
 \arguments{
-\item{data}{A gd object.}
+\item{reg}{A bwasserstein object.}
 
-\item{predictor}{The name of the vector of observed values (one of the columns of data$variables).}
+\item{xpred}{A kxp matrix of input values for regressors for prediction, where k is the number of points we do the prediction and p is the dimension of the input variables.}
 }
 \value{
-An object of class wasserstein containing the components:
-\code{error} The residuals.
-\code{prediction} The fitted regression.
-\code{ub} The upper band of the regression.
-\code{lb} The lower band of the regression.
-where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+A kxm array. Qpred(l, :) is the regression prediction of Q given X = xpred(l, :)' where m is the dimension of the grid of quantile function.
 }
 \description{
-Performs the Wasserstein regression prediction.
+Performs the Wasserstein prediction.
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+wass = wasserstein_regression(data, "BMI")
+# Example of prediction
+xpred = as.matrix(25)
+pred = wasserstein_prediction(wass, xpred)
 }

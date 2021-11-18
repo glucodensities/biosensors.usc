@@ -21,18 +21,25 @@
 #' @importFrom graphics par plot lines
 #' @importFrom stats complete.cases
 #'
-#' @title wasserstein_analysis
-#' @description Performs the Wasserstein regression analysis.
-#' @param data A gd object.
-#' @param predictor The name of the vector of observed values (one of the columns of data$variables).
+#' @title wasserstein_regression
+#' @description Performs the Wasserstein regression using quantile density function.
+#' @param data A biosensor object.
+#' @param response The name of the scalar response. The response must be a column name in data$variables.
 #' @return An object of class wasserstein containing the components:
-#' \code{error} The residuals.
 #' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' \code{regression} An internal bwasserstein object (@seealso cpp_wasserstein_regression)
+#' \code{data} A data frame with biosensor raw data.
+#' \code{response} The name of the scalar response.
+#' @usage
+#' wasserstein_regression(data, response)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' wass = wasserstein_regression(g1, "BMI")
 #' @export
-wasserstein_regression <- function(data, predictor) {
+wasserstein_regression <- function(data, response) {
   if (!is(data, "biosensor"))
     stop("Error: data must be an object of biosensor class. @seealso biosensors.usc::load_data")
 
@@ -48,11 +55,11 @@ wasserstein_regression <- function(data, predictor) {
   if (!is(data$variables, "data.frame"))
     stop("The data attribute variables must be of type matrix or array")
 
-  if (!(predictor %in% colnames(data$variables)))
-    stop("Error: predictor name is not a colname in data$variables.")
+  if (!(response %in% colnames(data$variables)))
+    stop("Error: response name is not a colname in data$variables.")
 
-  wass <- wasserstein(data, predictor)
-  band <- confidence_band(data, predictor)
+  wass <- wasserstein(data, response)
+  band <- confidence_band(data, response)
 
   Qp <- fda.usc::fdata(band$Qpred, argvals = band$t)
   Ql <- fda.usc::fdata(band$Q_lx, argvals = band$t)
@@ -65,22 +72,28 @@ wasserstein_regression <- function(data, predictor) {
   graphics::lines(Qu, lty = 2, col = "red")
   graphics::lines(Ql, lty = 2, col = "red")
 
-  gd.wasserstein <- list(prediction = Qp, ub = Qu, lb = Ql, regression = wass, data = data, predictor = predictor)
+  gd.wasserstein <- list(prediction = Qp, regression = wass, data = data, response = response)
   class(gd.wasserstein) <- "bwasserstein"
   return(gd.wasserstein)
 }
 
 
 #' @title wasserstein_prediction
-#' @description Performs the Wasserstein regression prediction.
-#' @param data A gd object.
-#' @param predictor The name of the vector of observed values (one of the columns of data$variables).
-#' @return An object of class wasserstein containing the components:
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' @description Performs the Wasserstein prediction.
+#' @param reg A bwasserstein object.
+#' @param xpred A kxp matrix of input values for regressors for prediction, where k is the number of points we do the prediction and p is the dimension of the input variables.
+#' @return A kxm array. Qpred(l, :) is the regression prediction of Q given X = xpred(l, :)' where m is the dimension of the grid of quantile function.
+#' @usage
+#' wasserstein_prediction(regression, xpred)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' wass = wasserstein_regression(data, "BMI")
+#' # Example of prediction
+#' xpred = as.matrix(25)
+#' pred = wasserstein_prediction(wass, xpred)
 #' @export
 wasserstein_prediction <- function(reg, xpred) {
   if (class(reg) != "bwasserstein")
@@ -89,7 +102,7 @@ wasserstein_prediction <- function(reg, xpred) {
   object <- cpp_wasserstein_regression(reg$regression$xfit, reg$regression$q, reg$regression$Q0, xpred,
                                        reg$regression$t, reg$regression$qdmin)
 
-  plot(fdata(object$Qpred))
+  plot(fdata(object$Qpred), main="Wasserstein prediction")
   return(object$Qpred)
 }
 

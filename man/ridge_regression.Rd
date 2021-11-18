@@ -4,33 +4,38 @@
 \alias{ridge_regression}
 \title{ridge_regression}
 \usage{
-ridge_regression(
-  data,
-  predictor,
-  w = NULL,
-  method = "manhattan",
-  type = "gaussian"
-)
+regmod_regression(data, response)
 }
 \arguments{
-\item{w}{ToDo.}
+\item{data}{A biosensor object.}
 
-\item{method}{The distance measure to be used (@seealso parallelDist::parDist)}
+\item{response}{The name of the scalar response. The response must be a column name in data$variables.}
 
-\item{type}{The kernel type ("gaussian" or "lapla")}
+\item{w}{Weight function.}
 
-\item{X}{ToDo.}
+\item{method}{The distance measure to be used (@seealso parallelDist::parDist). By default manhattan distance.}
 
-\item{Y}{ToDo.}
+\item{type}{The kernel type ("gaussian" or "lapla"). By default gaussian distance.}
 }
 \value{
-An object of class wasserstein containing the components:
-\code{call} The function call.
-\code{error} The residuals.
-\code{prediction} The fitted regression.
-\code{ub} The upper band of the regression.
-\code{lb} The lower band of the regression.
+An object containing the components:
+\code{best_alphas} Best coefficients obtained with leave-one-out cross-validation criteria.
+\code{best_kernel} The kernel matrix of the best solution.
+\code{best_sigma} The sigma parameter of the best solution.
+\code{best_lambda} The lambda parameter of the best solution.
+\code{sigmas} The sigma parameters used in the fitting according to the median heuristic fitting criteria.
+\code{predictions} A matrix of predictions.
+\code{r2} R-square of the different models fitted.
+\code{error} Mean squared-error of the different models fitted.
+\code{predictions_cross} A matrix of predictions obtained with leave-one-out cross-validation criteria.
 }
 \description{
 Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+regm = ridge_regression(data, "BMI")
 }

@@ -28,7 +28,7 @@
 namespace bio {
 
 struct nadaraya_struct {
-  arma::mat coefficients;
+  arma::mat prediction;
   arma::mat residuals;
   arma::mat r2;
   arma::mat error;
@@ -249,7 +249,7 @@ nadaraya_struct nadayara_regression(const arma::mat X, const arma::mat t, const 
   }
 
   nadaraya_struct result;
-  result.coefficients = prediciones;
+  result.prediction = prediciones;
   result.residuals = residuosglobal;
   result.r2 = R2;
   result.error = error;

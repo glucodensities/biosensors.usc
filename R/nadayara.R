@@ -17,19 +17,25 @@
 ## You should have received a copy of the GNU General Public License
 ## along with biosensors.usc.  If not, see <http://www.gnu.org/licenses/>.
 
+# result.predition = prediciones;
+# result.residuals = residuosglobal;
+# result.r2 = R2;
+# result.error = error;
+# result.r2_global = R2validacion;
+
 #' @importFrom graphics par plot axis box mtext legend
 #' @importFrom stats complete.cases
 
 #' @title nadayara_regression
-#' @description Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
+#' @description Functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
 #' @param data A biosensor object.
 #' @param response The name of the scalar response. The response must be a column name in data$variables.
 #' @return An object of class bnadaraya:
-#' \code{nadaraya} ToDo
-#' \code{r2} ToDo
-#' \code{error} ToDo
-#' \code{data} ToDo
-#' \code{response} ToDo
+#' \code{prediction} The Nadaraya-Watson prediction for each point of the training data at each h=seq(0.8, 15, length=200).
+#' \code{r2} R2 estimation for the training data at each h=seq(0.8, 15, length=200).
+#' \code{error} Standard mean-squared error after applying leave-one-out cross-validation for the training data at each h=seq(0.8, 15, length=200).
+#' \code{data} A data frame with biosensor raw data.
+#' \code{response} The name of the scalar response.
 #' @usage
 #' nadayara_regression(data, response)
 #' @examples
@@ -155,7 +161,7 @@ nadayara_regression <- function(data, response) {
                    pch = c(1, 1), col = c("#0073C2FF", "#FC4E07")
   )
 
-  gd.regression <- list(nadayara = res, r2 = R2, error = cell.density, data = data, response = response)
+  gd.regression <- list(prediction = res$prediction, r2 = R2, error = cell.density, data = data, response = response)
   class(gd.regression) <- "bnadaraya"
   return(gd.regression)
 }
@@ -164,13 +170,13 @@ nadayara_regression <- function(data, response) {
 
 
 #' @title nadayara_prediction
-#' @description Functional non-parametric regression with 2-Wasserstein distance using as predictor the distributional representation and as response a scalar outcome.
+#' @description Functional non-parametric Nadaraya-Watson prediction with 2-Wasserstein distance.
 #' @param data A biosensor object.
-#' @param Qpred ToDo
-#' @param hs ToDo
+#' @param Qpred Quantile curves that will be used in the predictions
+#' @param hs Smoothing parameters for the predictions, by default hs = seq(0.8, 15, length = 200)
 #' @return An object of class bnadarayapred:
-#' \code{prediction}
-#' \code{windows}
+#' \code{prediction} The Nadaraya-Watson prediction for the test data at each value of hs.
+#' \code{hs} Hs values used for the prediction.
 #' @usage
 #' nadayara_prediction(data, response)
 #' @examples
@@ -179,6 +185,7 @@ nadayara_regression <- function(data, response) {
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
 #' nada = nadayara_regression(data, "BMI")
+#' # Example of prediction with the column mean of quantiles
 #' npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
 #' @export
 nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
@@ -238,7 +245,7 @@ nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
 
   res <- cpp_nadayara_prediction(X, t, Y, hs, indices1, indices2)
 
-  gd.pred <- list(prediction = res, windows = hs)
+  gd.pred <- list(prediction = res, hs = hs)
   class(gd.pred) <- "bnadarayapred"
   return(gd.pred)
 }

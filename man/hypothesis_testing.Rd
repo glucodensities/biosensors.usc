@@ -4,18 +4,34 @@
 \alias{hypothesis_testing}
 \title{hypothesis_testing}
 \usage{
-hypothesis_testing(data1, data2, permutations = 100)
+hypothesis_testing(data1, data2, permutations=100)
 }
 \arguments{
-\item{data1}{The glocodensities object of the first population.}
+\item{data1}{A biosensor object. First population.}
 
-\item{data2}{The glocodensities object of the second population.}
+\item{data2}{A biosensor object. Second population.}
 
-\item{permutations}{The number of permutations.}
+\item{permutations}{Number of permutations used in the energy distance calibration test.}
 }
 \value{
-A biosensors.usc.comparison object with mean and variance of the two populations, and the energy and anova pvalues.
+An object of class biotest:
+\code{p1_mean} Quantile mean of the first population.
+\code{p1_variance} Quantile variance of the first population.
+\code{p2_mean} Quantile mean of the second population.
+\code{p2_variance} Quantile variance of the second population.
+\code{energy_pvalue} P-value of the energy distance test.
+\code{anova_pvalue} P-value of the ANOvA-Fréchet test.
 }
 \description{
-Loads the glocodensities from two csv files.
+Hypothesis testing between two random samples of distributional representations to detect differences in scale and localization (ANOVA test) or distributional differences (Energy distance).
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data1 = load_data(file1, file2)
+file3 = system.file("extdata", "data_2.csv", package = "biosensors.usc")
+file4 = system.file("extdata", "variables_2.csv", package = "biosensors.usc")
+data2 = load_data(file3, file4)
+htest = hypothesis_testing(data1, data2)
 }

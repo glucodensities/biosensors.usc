@@ -2,24 +2,28 @@
 % Please edit documentation in R/regmod.R
 \name{regmod_regression}
 \alias{regmod_regression}
-\title{regmod regression}
+\title{regmod_regression}
 \usage{
-regmod_regression(data, predictor)
+regmod_regression(data, response)
 }
 \arguments{
-\item{data}{A gd object.}
+\item{data}{A biosensor object.}
 
-\item{response}{The name of the vector of observed values (one of the columns of data$variables).}
+\item{response}{The name of the scalar response. The response must be a column name in data$variables.}
 }
 \value{
-An object of class wasserstein containing the components:
-\code{call} The function call.
-\code{error} The residuals.
-\code{prediction} The fitted regression.
-\code{ub} The upper band of the regression.
-\code{lb} The lower band of the regression.
-where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+An object of class bregmod containing the components:
+\code{beta} The beta coefficient functions of the fitting.
+\code{prediction} The prediction for each training data.
+\code{residuals} The residuals for each prediction value.
 }
 \description{
-Performs the Wasserstein regression.
+Performs the Wasserstein regression using quantile functions.
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+regm = regmod_regression(g1, "BMI")
 }

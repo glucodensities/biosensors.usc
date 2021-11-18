@@ -19,17 +19,22 @@
 
 #' @importFrom osqp solve_osqp osqpSettings
 
-#' @title regmod regression
-#' @description Performs the Wasserstein regression.
-#' @param data A gd object.
-#' @param response The name of the vector of observed values (one of the columns of data$variables).
-#' @return An object of class wasserstein containing the components:
-#' \code{call} The function call.
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' @title regmod_regression
+#' @description Performs the Wasserstein regression using quantile functions.
+#' @param data A biosensor object.
+#' @param response The name of the scalar response. The response must be a column name in data$variables.
+#' @return An object of class bregmod containing the components:
+#' \code{beta} The beta coefficient functions of the fitting.
+#' \code{prediction} The prediction for each training data.
+#' \code{residuals} The residuals for each prediction value.
+#' @usage
+#' regmod_regression(data, response)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' regm = regmod_regression(g1, "BMI")
 #' @export
 regmod_regression <- function(data, predictor) {
   if (!is(data, "biosensor"))
@@ -201,11 +206,11 @@ regmod_regression <- function(data, predictor) {
 
   gd.regmod = list(
     "beta"=beta,
-    "varbeta"=varbeta,
-    "predcrudo"=prediciones,
-    "predmedia"=predicciones2,
-    "residuosmedia"=residuos,
-    "predsd" = sd)
+    # "varbeta"=varbeta,
+    "predictions"=prediciones,
+    # "predmedia"=predicciones2,
+    # "predsd" = sd,
+    "residuals"= residuos)
 
   representar(gd.regmod$predmedia, cuantil, prediciones)
 
@@ -224,27 +229,32 @@ representar <- function(aux, aux2, aux3) {
 }
 
 
-#' @title regmod prediction
-#' @description Performs the Wasserstein regression.
-#' @param data A gd object.
-#' @param response The name of the vector of observed values (one of the columns of data$variables).
-#' @return An object of class wasserstein containing the components:
-#' \code{call} The function call.
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+#' @title regmod_prediction
+#' @description Performs the Wasserstein regression using quantile functions.
+#' @param data A bregmod object.
+#' @param xpred A kxp matrix of input values for regressors for prediction, where k is the number of points we do the prediction and p is the dimension of the input variables.
+#' @return A kxm array. Qpred(l, :) is the regression prediction of Q given X = xpred(l, :)' where m is the dimension of the grid of quantile function.
+#' @usage
+#' regmod_prediction(data, xpred)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' regm = regmod_regression(g1, "BMI")
+#' # Example of prediction
+#' xpred = as.matrix(25)
+#' g1rmp = regmod_prediction(regm, xpred)
 #' @export
-regmod_prediction <- function(data, Xpred) {
+regmod_prediction <- function(data, xpred) {
 
   if (class(data) != "bregmod")
     stop("The data must be an object of bregmod class. ")
 
-  nx= dim(Xpred)[1]
+  nx= dim(xpred)[1]
 
   unos = rep(1,nx)
-  matrizdiseño = cbind(unos,Xpred)
+  matrizdiseño = cbind(unos,xpred)
   matrizdiseño = as.matrix(matrizdiseño)
   predcrudo = matrizdiseño%*%data$beta
 
@@ -279,7 +289,7 @@ regmod_prediction <- function(data, Xpred) {
 
 
   predfinal= cuadratico(predcrudo)
-
+  plot(fdata(predfinal), main="Wasserstein prediction")
 
   return(predfinal)
 

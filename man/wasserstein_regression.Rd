@@ -2,23 +2,29 @@
 % Please edit documentation in R/wasserstein.R
 \name{wasserstein_regression}
 \alias{wasserstein_regression}
-\title{wasserstein_analysis}
+\title{wasserstein_regression}
 \usage{
-wasserstein_regression(data, predictor)
+wasserstein_regression(data, response)
 }
 \arguments{
-\item{data}{A gd object.}
+\item{data}{A biosensor object.}
 
-\item{predictor}{The name of the vector of observed values (one of the columns of data$variables).}
+\item{response}{The name of the scalar response. The response must be a column name in data$variables.}
 }
 \value{
 An object of class wasserstein containing the components:
-\code{error} The residuals.
 \code{prediction} The fitted regression.
-\code{ub} The upper band of the regression.
-\code{lb} The lower band of the regression.
-where \code{error}, \code{prediction}, \code{ub}, and \code{lb} are \code{fdata} objects.
+\code{regression} An internal bwasserstein object (@seealso cpp_wasserstein_regression)
+\code{data} A data frame with biosensor raw data.
+\code{response} The name of the scalar response.
 }
 \description{
-Performs the Wasserstein regression analysis.
+Performs the Wasserstein regression using quantile density function.
+}
+\examples{
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+data = load_data(file1, file2)
+wass = wasserstein_regression(g1, "BMI")
 }

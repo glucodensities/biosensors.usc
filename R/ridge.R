@@ -22,31 +22,43 @@
 
 #' @title ridge_regression
 #' @description Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
-#' @param X ToDo.
-#' @param Y ToDo.
-#' @param w ToDo.
-#' @param method The distance measure to be used (@seealso parallelDist::parDist)
-#' @param type The kernel type ("gaussian" or "lapla")
-#' @return An object of class wasserstein containing the components:
-#' \code{call} The function call.
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
+#' @param data A biosensor object.
+#' @param response The name of the scalar response. The response must be a column name in data$variables.
+#' @param w Weight function.
+#' @param method The distance measure to be used (@seealso parallelDist::parDist). By default manhattan distance.
+#' @param type The kernel type ("gaussian" or "lapla"). By default gaussian distance.
+#' @return An object containing the components:
+#' \code{best_alphas} Best coefficients obtained with leave-one-out cross-validation criteria.
+#' \code{best_kernel} The kernel matrix of the best solution.
+#' \code{best_sigma} The sigma parameter of the best solution.
+#' \code{best_lambda} The lambda parameter of the best solution.
+#' \code{sigmas} The sigma parameters used in the fitting according to the median heuristic fitting criteria.
+#' \code{predictions} A matrix of predictions.
+#' \code{r2} R-square of the different models fitted.
+#' \code{error} Mean squared-error of the different models fitted.
+#' \code{predictions_cross} A matrix of predictions obtained with leave-one-out cross-validation criteria.
+#' @usage
+#' regmod_regression(data, response)
+#' @examples
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
+#' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
+#' data = load_data(file1, file2)
+#' regm = ridge_regression(data, "BMI")
 #' @export
-ridge_regression = function(data, predictor, w=NULL, method="manhattan", type="gaussian") {
+ridge_regression = function(data, response, w=NULL, method="manhattan", type="gaussian") {
 # ridge_regression = function(X, Y, w=1, method="manhattan", type="gaussian") {
 
 
   nas <- tryCatch(
     {
-      !is.na(data$variables[, predictor])
+      !is.na(data$variables[, response])
     },
     error = function(e) {
       message("The An error occured while computing the wassertein regression:\n", e)
     }
   )
-  pred <- as.data.frame(data$variables[nas, predictor])
+  pred <- as.data.frame(data$variables[nas, response])
   cuantil <- as.data.frame(data$quantiles$data[nas, ])
 
   if (is.null(w))
@@ -91,69 +103,3 @@ ridge_regression = function(data, predictor, w=NULL, method="manhattan", type="g
   }
 }
 
-# n=1000
-# p= 2
-# X= matrix(runif(n*p,0,1), nrow= n, ncol=p)
-# Y= X[,1]+rnorm(n)
-# m=ridge_analysis(X, Y ,w= rep(1,n))
-
-
-#' @title ridge_prediction
-#' @description Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
-#' @param m ToDo.
-#' @param X ToDo.
-#' @param Xpred ToDo.
-#' @param method The distance measure to be used (@seealso parallelDist::parDist)
-#' @param type The kernel type ("gaussian" or "lapla")
-#' @return An object of class wasserstein containing the components:
-#' \code{call} The function call.
-#' \code{error} The residuals.
-#' \code{prediction} The fitted regression.
-#' \code{ub} The upper band of the regression.
-#' \code{lb} The lower band of the regression.
-#' @export
-ridge_prediction = function(m, X, Xpred, method="manhattan", type="gaussian"){
-
-  alpha = m$best_alphas
-  Xnew = rbind(X,Xpred)
-  n1 = dim(X)[1]
-  n2 = n1+dim(Xpred)[1]
-
-  sel1 = (n1+1):n2
-  sel2 = 1:n1
-
-
-  distancia = parallelDist::parDist(Xnew, method = method)
-  distancia = as.matrix(distancia)
-  distancia = distancia[sel1,sel2]
-
-  if(type == "gaussian"){
-    distancia = as.matrix(distancia)
-    potencias = seq(0.3,3.5, length=35)
-    sigmas = m$best_sigma
-    distancia = (distancia)^2
-    mediana = sigmas
-    kernel = exp(-distancia*(1/mediana))
-    pred = kernel%*%as.matrix(alpha)
-  }
-
-  if(type == "lapla"){
-    distancia = as.matrix(distancia)
-    potencias = seq(0.3,3.5, length=35)
-    sigmas = m$best_sigma
-    distancia = distancia
-    mediana = sigmas
-    kernel = exp(-distancia*(1/mediana))
-    pred = kernel%*%as.matrix(alpha)
-  }
-
-  return(pred)
-
-
-}
-
-
-# ntest = 10
-# Xpred = matrix(runif(ntest*p,0,1), nrow= ntest, ncol=p)
-# print(ridge_prediction(m=m,X=X,Xpred))
-# print(Xpred%*%as.matrix(c(1,0)))
