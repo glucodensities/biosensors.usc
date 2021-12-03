@@ -21,7 +21,7 @@
 
 
 #' @title ridge_regression
-#' @description Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
+#' @description ToDo
 #' @param data A biosensor object.
 #' @param response The name of the scalar response. The response must be a column name in data$variables.
 #' @param w Weight function.

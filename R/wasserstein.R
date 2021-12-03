@@ -22,7 +22,7 @@
 #' @importFrom stats complete.cases
 #'
 #' @title wasserstein_regression
-#' @description Performs the Wasserstein regression using quantile density function.
+#' @description Performs the Wasserstein regression using a quantile density function.
 #' @param data A biosensor object.
 #' @param response The name of the scalar response. The response must be a column name in data$variables.
 #' @return An object of class wasserstein containing the components:

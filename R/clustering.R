@@ -91,7 +91,7 @@ clustering <- function(data, clusters = 3, iter_max = 10, restarts = 1) {
 
 
 #' @title clustering_prediction
-#' @description Performs kgroups clustering by energy distance of biosensors.usc.
+#' @description ToDo.
 #' @param clustering A gl.clustering object.
 #' @param objects Matrix of objects to cluster.
 #' @return The clusters to which these objects are assigned.

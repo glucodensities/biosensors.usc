@@ -24,7 +24,7 @@
 #' @title load_data
 #' @description R function to read biosensors data from a csv files.
 #' @param filename_fdata A csv file with the functional data. The csv file must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure.
-#' @param filename_variables A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this indvidual.
+#' @param filename_variables A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this individual.
 #' @return A biosensor object:
 #' \code{data} A data frame with biosensor raw data.
 #' \code{densities} A functional data object (fdata) with a non-parametric density estimation.
