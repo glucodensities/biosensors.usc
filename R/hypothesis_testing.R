@@ -20,6 +20,7 @@
 #' @importFrom fda.usc fdata func.mean func.var semimetric.basis metric.lp
 #' @importFrom graphics par plot lines legend
 #' @importFrom stats pchisq
+#' @importFrom methods is
 
 #' @title hypothesis_testing
 #' @description Hypothesis testing between two random samples of distributional representations to detect differences in scale and localization (ANOVA test) or distributional differences (Energy distance).
@@ -36,7 +37,9 @@
 #' @usage
 #' hypothesis_testing(data1, data2, permutations=100)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data1 = load_data(file1, file2)

@@ -18,6 +18,8 @@
 ## along with biosensors.usc.  If not, see <http://www.gnu.org/licenses/>.
 
 #' @importFrom osqp solve_osqp osqpSettings
+#' @importFrom methods is
+#' @importFrom stats as.formula lm
 
 #' @title regmod_regression
 #' @description Performs the Wasserstein regression using quantile functions.
@@ -30,13 +32,15 @@
 #' @usage
 #' regmod_regression(data, response)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
-#' regm = regmod_regression(g1, "BMI")
+#' regm = regmod_regression(data, "BMI")
 #' @export
-regmod_regression <- function(data, predictor) {
+regmod_regression <- function(data, response) {
   if (!is(data, "biosensor"))
     stop("The data must be an object of biosensor class. @seealso biosensors.usc::load_data")
 
@@ -52,19 +56,19 @@ regmod_regression <- function(data, predictor) {
   if (!is(data$variables, "data.frame"))
     stop("The data attribute variables must be of type matrix or array")
 
-  if (!(predictor %in% colnames(data$variables)))
-    stop("Error: predictor name is not a colname in data$variables.")
+  if (!(response %in% colnames(data$variables)))
+    stop("Error: response name is not a colname in data$variables.")
 
   formulax = NULL
   nas <- tryCatch(
     {
-      !is.na(data$variables[, predictor])
+      !is.na(data$variables[, response])
     },
     error = function(e) {
       message("The An error occured while computing the wassertein regression:\n", e)
     }
   )
-  pred <- as.data.frame(data$variables[nas, predictor])
+  pred <- as.data.frame(data$variables[nas, response])
   cuantil <- as.data.frame(data$quantiles$data[nas, ])
 
   cuadratico = function(prediciones, cotainferior=-10e-5, cotasuperior=800){
@@ -212,7 +216,7 @@ regmod_regression <- function(data, predictor) {
     # "predsd" = sd,
     "residuals"= residuos)
 
-  representar(gd.regmod$predmedia, cuantil, prediciones)
+  representar(predicciones2, cuantil, prediciones)
 
   class(gd.regmod) <- "bregmod"
   return(gd.regmod)
@@ -237,11 +241,13 @@ representar <- function(aux, aux2, aux3) {
 #' @usage
 #' regmod_prediction(data, xpred)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
-#' regm = regmod_regression(g1, "BMI")
+#' regm = regmod_regression(data, "BMI")
 #' # Example of prediction
 #' xpred = as.matrix(25)
 #' g1rmp = regmod_prediction(regm, xpred)
@@ -254,9 +260,9 @@ regmod_prediction <- function(data, xpred) {
   nx= dim(xpred)[1]
 
   unos = rep(1,nx)
-  matrizdiseño = cbind(unos,xpred)
-  matrizdiseño = as.matrix(matrizdiseño)
-  predcrudo = matrizdiseño%*%data$beta
+  matrizdisenho = cbind(unos,xpred)
+  matrizdisenho = as.matrix(matrizdisenho)
+  predcrudo = matrizdisenho%*%data$beta
 
   cuadratico = function(prediciones, cotainferior=-10e-5, cotasuperior=800){
     prediciones = as.matrix(prediciones)

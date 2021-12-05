@@ -4,14 +4,14 @@
 \alias{nadayara_prediction}
 \title{nadayara_prediction}
 \usage{
-nadayara_prediction(data, response)
+nadayara_prediction(nadaraya, Qpred, hs=NULL)
 }
 \arguments{
+\item{nadaraya}{A Nadaraya regression object.}
+
 \item{Qpred}{Quantile curves that will be used in the predictions}
 
 \item{hs}{Smoothing parameters for the predictions, by default hs = seq(0.8, 15, length = 200)}
-
-\item{data}{A biosensor object.}
 }
 \value{
 An object of class bnadarayapred:
@@ -22,11 +22,13 @@ An object of class bnadarayapred:
 Functional non-parametric Nadaraya-Watson prediction with 2-Wasserstein distance.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)
 nada = nadayara_regression(data, "BMI")
 # Example of prediction with the column mean of quantiles
-npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
+npre = nadayara_prediction(nada, t(colMeans(data$quantiles$data)))
 }

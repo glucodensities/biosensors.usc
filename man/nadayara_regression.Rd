@@ -23,7 +23,9 @@ An object of class bnadaraya:
 Functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)

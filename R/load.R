@@ -19,6 +19,7 @@
 
 #' @importFrom fda.usc fdata
 #' @importFrom utils read.csv
+#' @importFrom stats runif approxfun
 #' @importFrom truncnorm qtruncnorm
 
 #' @title load_data
@@ -31,14 +32,16 @@
 #' \code{quantiles} A functional data object (fdata) with the empirical quantile estimation.
 #' \code{variables} A data frame with the covariates.
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
 #' names(data)
-#' header(data$quantiles)
-#' header(data$variables)
-#' plot(quantiles, main="Quantile curves")
+#' head(data$quantiles)
+#' head(data$variables)
+#' plot(data$quantiles, main="Quantile curves")
 #' @export
 load_data <- function(filename_fdata, filename_variables=NULL) {
 
@@ -129,9 +132,9 @@ load_density_data <- function(df, t) {
 #' @examples
 #' data = generate_data(n=100, Qp=100, Xp=5)
 #' names(data)
-#' header(data$quantiles)
-#' header(data$variables)
-#' plot(quantiles, main="Quantile curves")
+#' head(data$quantiles)
+#' head(data$variables)
+#' plot(data$quantiles, main="Quantile curves")
 #' @export
 generate_data <- function(n=100, Qp=100, Xp=5) {
   if (n <= 0)

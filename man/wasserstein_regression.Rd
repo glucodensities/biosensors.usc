@@ -19,12 +19,14 @@ An object of class wasserstein containing the components:
 \code{response} The name of the scalar response.
 }
 \description{
-Performs the Wasserstein regression using quantile density function.
+Performs the Wasserstein regression using a quantile density function.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)
-wass = wasserstein_regression(g1, "BMI")
+wass = wasserstein_regression(data, "BMI")
 }

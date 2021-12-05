@@ -4,14 +4,14 @@
 \alias{ridge_regression}
 \title{ridge_regression}
 \usage{
-regmod_regression(data, response)
+ridge_regression(data, response, w=NULL, method="manhattan", type="gaussian")
 }
 \arguments{
 \item{data}{A biosensor object.}
 
 \item{response}{The name of the scalar response. The response must be a column name in data$variables.}
 
-\item{w}{Weight function.}
+\item{w}{A weight function.}
 
 \item{method}{The distance measure to be used (@seealso parallelDist::parDist). By default manhattan distance.}
 
@@ -30,10 +30,12 @@ An object containing the components:
 \code{predictions_cross} A matrix of predictions obtained with leave-one-out cross-validation criteria.
 }
 \description{
-Generates a quantile reression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0;
+Performs a Ridge regression.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)

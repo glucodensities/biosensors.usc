@@ -25,6 +25,7 @@
 
 #' @importFrom graphics par plot axis box mtext legend
 #' @importFrom stats complete.cases
+#' @importFrom methods is
 
 #' @title nadayara_regression
 #' @description Functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
@@ -39,7 +40,9 @@
 #' @usage
 #' nadayara_regression(data, response)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
@@ -171,22 +174,24 @@ nadayara_regression <- function(data, response) {
 
 #' @title nadayara_prediction
 #' @description Functional non-parametric Nadaraya-Watson prediction with 2-Wasserstein distance.
-#' @param data A biosensor object.
+#' @param nadaraya A Nadaraya regression object.
 #' @param Qpred Quantile curves that will be used in the predictions
 #' @param hs Smoothing parameters for the predictions, by default hs = seq(0.8, 15, length = 200)
 #' @return An object of class bnadarayapred:
 #' \code{prediction} The Nadaraya-Watson prediction for the test data at each value of hs.
 #' \code{hs} Hs values used for the prediction.
 #' @usage
-#' nadayara_prediction(data, response)
+#' nadayara_prediction(nadaraya, Qpred, hs=NULL)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
 #' nada = nadayara_regression(data, "BMI")
 #' # Example of prediction with the column mean of quantiles
-#' npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)))
+#' npre = nadayara_prediction(nada, t(colMeans(data$quantiles$data)))
 #' @export
 nadayara_prediction <- function(nadaraya, Qpred, hs=NULL){
   if (!is(nadaraya, "bnadaraya"))

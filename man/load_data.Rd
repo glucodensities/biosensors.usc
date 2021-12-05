@@ -9,7 +9,7 @@ load_data(filename_fdata, filename_variables = NULL)
 \arguments{
 \item{filename_fdata}{A csv file with the functional data. The csv file must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure.}
 
-\item{filename_variables}{A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this indvidual.}
+\item{filename_variables}{A csv file with the clinical variables. The csv file contains a row per individual and must have a column id identifying this individual.}
 }
 \value{
 A biosensor object:
@@ -22,12 +22,14 @@ A biosensor object:
 R function to read biosensors data from a csv files.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)
 names(data)
-header(data$quantiles)
-header(data$variables)
-plot(quantiles, main="Quantile curves")
+head(data$quantiles)
+head(data$variables)
+plot(data$quantiles, main="Quantile curves")
 }

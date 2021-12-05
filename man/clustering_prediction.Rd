@@ -4,7 +4,7 @@
 \alias{clustering_prediction}
 \title{clustering_prediction}
 \usage{
-energy_prediction(clustering, objects)
+clustering_prediction(clustering, objects)
 }
 \arguments{
 \item{clustering}{A gl.clustering object.}
@@ -15,5 +15,5 @@ energy_prediction(clustering, objects)
 The clusters to which these objects are assigned.
 }
 \description{
-Performs kgroups clustering by energy distance of biosensors.usc.
+Predicts the cluster of each element of the objects list
 }

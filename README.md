@@ -16,6 +16,9 @@ Please use reference [1] to cite this package.
 The biosensor.usc aims to provide a unified and user-friendly framework for using new distributional representations of biosensors data in different statistical modeling tasks: regression models, hypothesis testing, cluster analysis, visualization, and descriptive analysis.
 Distributional representations are a functional extension of compositional time-range metrics and we have used them successfully so far in modeling glucose profiles and accelerometer data. However, these functional representations can be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
 
+## Document
+
+> 1) Manual (https://github.com/glucodensities/biosensors.usc/biosensors.usc_1.0.pdf)
 
 
 ## Installation Instructions:
@@ -24,7 +27,14 @@ Distributional representations are a functional extension of compositional time-
     
 > 1. R (http://www.r-project.org/)
 
-> 2. Package [Rcpp](https://cran.r-project.org/web/packages/Rcpp), [RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo), [energy](https://cran.r-project.org/web/packages/energy), [fda.usc](https://cran.r-project.org/web/packages/fda.usc), [parallelDist](https://cran.r-project.org/web/packages/parallelDist), graphics, stats, utils (required in R >= 2.14).
+> 2. Package 
+[Rcpp](https://cran.r-project.org/web/packages/Rcpp), 
+[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo),  
+[energy](https://cran.r-project.org/web/packages/energy), 
+[fda.usc](https://cran.r-project.org/web/packages/fda.usc), 
+[osqp](https://cran.r-project.org/web/packages/osqp), 
+[truncnorm](https://cran.r-project.org/web/packages/truncnorm), [parallelDist](https://cran.r-project.org/web/packages/parallelDist), 
+graphics, stats, methods, utils (required in R >= 2.14).
 
 Please install the required R packages before you install the biosensor.usc package. After the installation of the dependencies, please install the **biosensor.usc** as following steps.
 
@@ -125,7 +135,7 @@ Call the Nadaraya-Watson regression with 2-Wasserstein distance:
 Use the previously computed Nadaraya-Watson regression to obtain the regression prediction given the quantile curves:
 
 ```
-npre = nadayara_prediction(nada, t(colMeans(g1$quantiles$data)));
+npre = nadayara_prediction(nada, t(colMeans(data$quantiles$data)));
 ```
 
 
@@ -148,7 +158,7 @@ clus = clustering(data, clusters=3);
 Use the previously computed clustering to obtain the clusters of the given objects: 
 
 ```
-assignments = energy_prediction(clustering, objects);
+assignments = clustering_prediction(clustering, objects);
 ```
 
 

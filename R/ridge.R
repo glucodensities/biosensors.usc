@@ -18,13 +18,14 @@
 ## along with biosensors.usc.  If not, see <http://www.gnu.org/licenses/>.
 
 #' @importFrom parallelDist parDist
+#' @importFrom stats median
 
 
 #' @title ridge_regression
-#' @description ToDo
+#' @description Performs a Ridge regression.
 #' @param data A biosensor object.
 #' @param response The name of the scalar response. The response must be a column name in data$variables.
-#' @param w Weight function.
+#' @param w A weight function.
 #' @param method The distance measure to be used (@seealso parallelDist::parDist). By default manhattan distance.
 #' @param type The kernel type ("gaussian" or "lapla"). By default gaussian distance.
 #' @return An object containing the components:
@@ -38,9 +39,11 @@
 #' \code{error} Mean squared-error of the different models fitted.
 #' \code{predictions_cross} A matrix of predictions obtained with leave-one-out cross-validation criteria.
 #' @usage
-#' regmod_regression(data, response)
+#' ridge_regression(data, response, w=NULL, method="manhattan", type="gaussian")
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
@@ -48,7 +51,6 @@
 #' @export
 ridge_regression = function(data, response, w=NULL, method="manhattan", type="gaussian") {
 # ridge_regression = function(X, Y, w=1, method="manhattan", type="gaussian") {
-
 
   nas <- tryCatch(
     {

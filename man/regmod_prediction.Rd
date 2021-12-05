@@ -18,11 +18,13 @@ A kxm array. Qpred(l, :) is the regression prediction of Q given X = xpred(l, :)
 Performs the Wasserstein regression using quantile functions.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)
-regm = regmod_regression(g1, "BMI")
+regm = regmod_regression(data, "BMI")
 # Example of prediction
 xpred = as.matrix(25)
 g1rmp = regmod_prediction(regm, xpred)

@@ -19,6 +19,8 @@
 
 #' @importFrom energy kgroups
 #' @importFrom graphics par plot
+#' @importFrom stats dist
+#' @importFrom methods is
 
 #' @title clustering
 #' @description Performs energy clustering with Wasserstein distance using quantile distributional representations as covariates.
@@ -32,7 +34,9 @@
 #' @usage
 #' clustering(data, clusters=3, iter_max=10, restarts=1)
 #' @examples
-#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
+#' # Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+#' # McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+#' # biology 16(7), 2018.
 #' file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 #' file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 #' data = load_data(file1, file2)
@@ -91,12 +95,12 @@ clustering <- function(data, clusters = 3, iter_max = 10, restarts = 1) {
 
 
 #' @title clustering_prediction
-#' @description ToDo.
+#' @description Predicts the cluster of each element of the objects list
 #' @param clustering A gl.clustering object.
 #' @param objects Matrix of objects to cluster.
 #' @return The clusters to which these objects are assigned.
 #' @usage
-#' energy_prediction(clustering, objects)
+#' clustering_prediction(clustering, objects)
 #' @export
 clustering_prediction <- function(clustering, objects) {
   if (!is(clustering, "bclustering"))

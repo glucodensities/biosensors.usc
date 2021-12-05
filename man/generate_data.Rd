@@ -26,7 +26,7 @@ Generates a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a t
 \examples{
 data = generate_data(n=100, Qp=100, Xp=5)
 names(data)
-header(data$quantiles)
-header(data$variables)
-plot(quantiles, main="Quantile curves")
+head(data$quantiles)
+head(data$variables)
+plot(data$quantiles, main="Quantile curves")
 }

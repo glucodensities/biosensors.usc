@@ -4,7 +4,7 @@
 \alias{wasserstein_prediction}
 \title{wasserstein_prediction}
 \usage{
-wasserstein_prediction(regression, xpred)
+wasserstein_prediction(reg, xpred)
 }
 \arguments{
 \item{reg}{A bwasserstein object.}
@@ -18,7 +18,9 @@ A kxm array. Qpred(l, :) is the regression prediction of Q given X = xpred(l, :)
 Performs the Wasserstein prediction.
 }
 \examples{
-# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., â€œGlucotypes reveal new patterns of glucose dysregulationâ€, PLoS biology 16(7), 2018.
+# Data extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R.,
+# McLaughlin, T., Snyder, M., Glucotypes reveal new patterns of glucose dysregulation, PLoS
+# biology 16(7), 2018.
 file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 data = load_data(file1, file2)

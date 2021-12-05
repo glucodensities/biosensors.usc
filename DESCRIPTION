@@ -14,10 +14,10 @@ Description: Biosensor.usc aims to provide a unified and user-friendly framework
              compositional time-range metrics and we have used them successfully so far in modeling 
              glucose profiles and accelerometer data. However, these functional representations can 
              be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
-License: GPL-2
-Imports: Rcpp, graphics, stats, utils, energy, fda.usc, parallelDist
+Imports: Rcpp, graphics, stats, methods, utils, energy, fda.usc, parallelDist, osqp, truncnorm
 Depends: R (>= 2.15)
 LinkingTo: Rcpp, RcppArmadillo
 LazyLoad: Yes
+License: GPL-2
 NeedsCompilation: Yes
 RoxygenNote: 7.1.1
