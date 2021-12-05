@@ -18,7 +18,7 @@ Distributional representations are a functional extension of compositional time-
 
 ## Document
 
-> 1) Manual (https://github.com/glucodensities/biosensors.usc/biosensors.usc_1.0.pdf)
+> 1) Manual (https://github.com/glucodensities/biosensors.usc/blob/main/biosensors.usc_1.0.pdf)
 
 
 ## Installation Instructions:
