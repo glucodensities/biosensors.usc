@@ -20,6 +20,8 @@ Distributional representations are a functional extension of compositional time-
 
 > 1) Manual (https://github.com/glucodensities/biosensors.usc/blob/main/biosensors.usc_1.0.pdf)
 
+> 2) R Markdown example (https://github.com/glucodensities/biosensors.usc/blob/main/biosensors.usc.html)
+
 
 ## Installation Instructions:
 
@@ -40,11 +42,11 @@ Please install the required R packages before you install the biosensor.usc pack
 
 ### Install biosensor.usc from source code
 
-Install from source codes using devtools library
+Install from source code using devtools library:
 
 ```
-library("devtools");
-install_github("glucodensities/biosensors.usc")
+library("devtools")
+install_github("glucodensities/biosensors.usc@main")
 ```
 
 ## Usage Instructions
@@ -79,70 +81,70 @@ This data set has two different types of files.
 The first one contains the functional data, which csv files must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure:
 
 ```
-library(biosensors.usc);
-file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc");
+library(biosensors.usc)
+file1 = system.file("extdata", "data_1.csv", package = "biosensors.usc")
 ```
 
 The second type contains the clinical variables. This csv file must contain a row per individual and must have a column id identifying this individual.
 
 ```
-file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc");
+file2 = system.file("extdata", "variables_1.csv", package = "biosensors.usc")
 ```
 
 From these files, biosensor data can be loaded as follow: 
 
 ```
-data1 = load_data(file1, file2);
+data1 = load_data(file1, file2)
 ```
 
 We also provide a way to generate biosensor data from the aforementioned quantile regression model:
 
 ```
-data1 = generate_data(n=100, Qp=100, Xp=5);
+data1 = generate_data(n=100, Qp=100, Xp=5)
 ```
 
 Call the Wasserstein regression :
 
 ```
-wass = wasserstein_regression(data1, "BMI");
+wass = wasserstein_regression(data1, "BMI")
 ```
 
 Use the previously computed Wasserstein regression to obtain the regression prediction given a kxp matrix of input values, where k is the number of points we do the prediction and p is the dimension of the input variables:
 
 ```
-xpred = as.matrix(25);
+xpred = as.matrix(25)
 pred = wasserstein_prediction(wass, xpred)
 ```
 
 Alternatively we can also compute the Wasserstein regression using the following function: 
 
 ```
-wass = regmod_regression(data1, "BMI");
+wass = regmod_regression(data1, "BMI")
 ```
 
 Call the Ridge regression:
 
 ```
-regm = ridge_regression(data1, "BMI");
+regm = ridge_regression(data1, "BMI")
 ```
 
 Call the Nadaraya-Watson regression with 2-Wasserstein distance:
 
 ```
- nada = nadayara_regression(data1, "BMI");
+ nada = nadayara_regression(data1, "BMI")
 ```
 
 Use the previously computed Nadaraya-Watson regression to obtain the regression prediction given the quantile curves:
 
 ```
-npre = nadayara_prediction(nada, t(colMeans(data$quantiles$data)));
+npre = nadayara_prediction(nada, t(colMeans(data1$quantiles$data)))
 ```
 
 
 Call the Hypothesis testing between two random samples of distributional representations:
 
 ```
-file3 = system.file("extdata", "data_2.csv", package = "biosensors.usc");
+file3 = system.file("extdata", "data_2.csv", package = "biosensors.usc")
 file4 = system.file("extdata", "variables_2.csv", package = "biosensors.usc")
 data2 = load_data(file3, file4)
 htest = hypothesis_testing(data1, data2)
@@ -151,14 +153,14 @@ htest = hypothesis_testing(data1, data2)
 Call the energy clustering with Wasserstein distance using quantile distributional representations as covariates:
 
 ```
-clus = clustering(data, clusters=3);
+clus = clustering(data1, clusters=3)
 ```
 
 
 Use the previously computed clustering to obtain the clusters of the given objects: 
 
 ```
-assignments = clustering_prediction(clustering, objects);
+assignments = clustering_prediction(clus, data1$quantiles$data)
 ```
 
 
