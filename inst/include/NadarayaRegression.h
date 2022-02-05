@@ -40,11 +40,16 @@ struct nadaraya_struct {
 inline arma::mat trapecio(arma::mat X, arma::mat Y) {
   if (X.n_rows != Y.n_rows || X.n_cols != Y.n_cols)
     throw std::invalid_argument("Arguments 'x' and 'y' must be matrices of the same dimension");
-  bool transposed = false;
+  // bool transposed = false;
+  // arma::uword m = 1;
+  // if (X.n_cols == 1) {
+  //   transposed = true;
+  // } else {
+  // bool transposed = false;
   arma::uword m = 1;
-  if (X.n_cols == 1) {
-    transposed = true;
-  } else {
+  if (X.n_cols != 1) {
+  //   transposed = true;
+  // } else {
     X = X.t();
     Y = Y.t();
   }

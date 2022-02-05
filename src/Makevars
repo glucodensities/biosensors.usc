@@ -7,11 +7,13 @@
 ##
 ## And with R 3.4.0, and RcppArmadillo 0.7.960.*, we turn C++11 on as OpenMP
 ## support within Armadillo prefers / requires it
-CXX_STD = CXX11
+#CXX_STD = CXX11
 
-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -I../inst/include -I../inst/include/alglib -Wstrict-aliasing=0 -Wno-unused-but-set-variable -Wno-unused-function -Wno-maybe-uninitialized
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -I../inst/include -I../inst/include/alglib
 PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
-SOURCES = $(wildcard alglib/*.cpp)
+SOURCES = biosensors.usc.cpp alglib/alglibinternal.cpp alglib/alglibmisc.cpp alglib/ap.cpp alglib/linalg.cpp alglib/optimization.cpp alglib/solvers.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
 
-OBJECTS = biosensors.usc.o RcppExports.o $(SOURCES:.cpp=.o)
+#SOURCES = $(wildcard alglib/*.cpp)
+#OBJECTS = biosensors.usc.o RcppExports.o $(SOURCES:.cpp=.o)
