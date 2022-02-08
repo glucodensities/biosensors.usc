@@ -1,3 +1,7 @@
+ <!-- badges: start -->
+  [![R-CMD-check](https://github.com/glucodensities/biosensors.usc/workflows/R-CMD-check/badge.svg)](https://github.com/glucodensities/biosensors.usc/actions)
+  <!-- badges: end -->
+
 # biosensors.usc
 
 New distributional representations of biosensors data in different statistical modeling tasks. 
