@@ -269,7 +269,7 @@ inline regression_struct wasserstein_regression(const arma::mat xfit, const arma
       try {
         tmp = quadprog(D, d, V, v.t());
       } catch (...) {
-        std::cout << "WARNING: An error has occurred during the quadratic optimization..." << std::endl;
+        // Rcpp::Rcout << "WARNING: An error has occurred during the quadratic optimization..." << std::endl;
       }
       qall.row(dec(j)) = tmp.subvec(1,tmp.n_elem-1).t();
       Q0all(dec(j)) = tmp(0);

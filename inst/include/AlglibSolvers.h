@@ -93,7 +93,6 @@ namespace bio {
   }
 
   arma::mat real_2d_array2mat(alglib::real_2d_array x) {
-    // std::cout << "X size: " << x.rows() << ", " << x.cols() << std::endl;
     arma::mat a(x.rows(),x.cols());
     for (int i=0; i < x.rows(); i++) {
       for (int j=0; j < x.cols(); j++) {
