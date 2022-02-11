@@ -8,35 +8,26 @@ New distributional representations of biosensors data in different statistical m
 Please use reference [1] to cite this package.
 
 
-# Reference
+## References
 
 1. Matabuena, M., Petersen, A., Vidal, J. C., & Gude, F. (2021). Glucodensities: A new representation of glucose profiles using distributional data analysis. Statistical methods in medical research, 0962280221998064.
 
 2. Matabuena, M., & Petersen, A. (2021). Distributional data analysis with accelerometer data in a NHANES database with nonparametric survey regression models. arXiv preprint arXiv:2104.01165.
 
 
-## Abstract:
+## Abstract
 
 The biosensor.usc aims to provide a unified and user-friendly framework for using new distributional representations of biosensors data in different statistical modeling tasks: regression models, hypothesis testing, cluster analysis, visualization, and descriptive analysis.
 Distributional representations are a functional extension of compositional time-range metrics and we have used them successfully so far in modeling glucose profiles and accelerometer data. However, these functional representations can be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
 
-## Document
-
-> 1) [Manual](https://github.com/glucodensities/biosensors.usc/blob/main/biosensors.usc_1.0.pdf)
-
-> 2) [R Markdown example](https://htmlpreview.github.io/?https://github.com/glucodensities/biosensors.usc/blob/main/biosensors.usc.html)
-
-
-## Installation Instructions:
+## Installation Instructions
 
 ### Required software and packages
     
-> 1. R (http://www.r-project.org/)
+1. R (http://www.r-project.org/)
 
-> 2. Package 
-[Rcpp](https://cran.r-project.org/web/packages/Rcpp), 
-[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo),  
-[energy](https://cran.r-project.org/web/packages/energy), 
+2. R packages: [Rcpp](https://cran.r-project.org/web/packages/Rcpp), 
+[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo),  [energy](https://cran.r-project.org/web/packages/energy), 
 [fda.usc](https://cran.r-project.org/web/packages/fda.usc), 
 [osqp](https://cran.r-project.org/web/packages/osqp), 
 [truncnorm](https://cran.r-project.org/web/packages/truncnorm), [parallelDist](https://cran.r-project.org/web/packages/parallelDist), 
@@ -57,32 +48,32 @@ install_github("glucodensities/biosensors.usc@main")
 
 biosensor.usc is an R package which provides:
 
-> 1) Loading biosensors data from a csv files. 
+1) Loading biosensors data from a csv files. 
 
-> 2) Generating a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0.
+2) Generating a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0.
 
-> 3) Performing a Wasserstein regression using a quantile density function.
+3) Performing a Wasserstein regression using a quantile density function.
 
-> 4) Performing a prediction from a Wasserstein regression.
+4) Performing a prediction from a Wasserstein regression.
 
-> 5) Performing a Ridge regression using a quantile density function.
+5) Performing a Ridge regression using a quantile density function.
 
-> 6) Performing a functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
+6) Performing a functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance, using as predictor the distributional representation and as response a scalar outcome.
 
-> 7) Performing a prediction from a functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance.
+7) Performing a prediction from a functional non-parametric Nadaraya-Watson regression with 2-Wasserstein distance.
 
-> 8) Performing a hypothesis testing between two random samples of distributional representations to detect differences in scale and localization (ANOVA test) or distributional differences (Energy distance).
+8) Performing a hypothesis testing between two random samples of distributional representations to detect differences in scale and localization (ANOVA test) or distributional differences (Energy distance).
 
-> 9) Performing a energy clustering with Wasserstein distance using quantile distributional representations as covariates.
+9) Performing a energy clustering with Wasserstein distance using quantile distributional representations as covariates.
 
-> 10) Obtaining the clusters to which a set of object belong using a previously trained energy clustering with Wasserstein distance using quantile distributional representations as covariates.
+10) Obtaining the clusters to which a set of object belong using a previously trained energy clustering with Wasserstein distance using quantile distributional representations as covariates.
 
 
 The following codes show how to call above steps in R.
 
 We also attach a data set example through csv files in the package, extracted from the paper: Hall, H., Perelman, D., Breschi, A., Limcaoco, P., Kellogg, R., McLaughlin, T., Snyder, M., “Glucotypes reveal new patterns of glucose dysregulation”, PLoS biology 16(7), 2018.
-This data set has two different types of files. 
-The first one contains the functional data, which csv files must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure:
+
+This data set has two different types of files. The first one contains the functional data, which csv files must have long format with, at least, the following three columns: id, time, and value, where the id identifies the individual, the time indicates the moment in which the data was captured, and the value is a monitor measure:
 
 ```
 library(biosensors.usc)
