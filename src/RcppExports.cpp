@@ -6,38 +6,6 @@
 
 using namespace Rcpp;
 
-// cpp_wasserstein_regression
-Rcpp::List cpp_wasserstein_regression(const arma::mat xfit, const arma::mat q, const arma::mat Q0, const arma::mat xpred, const arma::vec t, const double qdmin);
-RcppExport SEXP _biosensors_usc_cpp_wasserstein_regression(SEXP xfitSEXP, SEXP qSEXP, SEXP Q0SEXP, SEXP xpredSEXP, SEXP tSEXP, SEXP qdminSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat >::type xfit(xfitSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type q(qSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type Q0(Q0SEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type xpred(xpredSEXP);
-    Rcpp::traits::input_parameter< const arma::vec >::type t(tSEXP);
-    Rcpp::traits::input_parameter< const double >::type qdmin(qdminSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_wasserstein_regression(xfit, q, Q0, xpred, t, qdmin));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_confidence_band
-Rcpp::List cpp_confidence_band(const arma::mat xfit, const arma::mat xpred, const arma::mat Q_obs, const arma::mat q_obs, const arma::vec t_vec, const double alpha);
-RcppExport SEXP _biosensors_usc_cpp_confidence_band(SEXP xfitSEXP, SEXP xpredSEXP, SEXP Q_obsSEXP, SEXP q_obsSEXP, SEXP t_vecSEXP, SEXP alphaSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat >::type xfit(xfitSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type xpred(xpredSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type Q_obs(Q_obsSEXP);
-    Rcpp::traits::input_parameter< const arma::mat >::type q_obs(q_obsSEXP);
-    Rcpp::traits::input_parameter< const arma::vec >::type t_vec(t_vecSEXP);
-    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_confidence_band(xfit, xpred, Q_obs, q_obs, t_vec, alpha));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cpp_nadayara_regression
 Rcpp::List cpp_nadayara_regression(const arma::mat X, const arma::mat t, const arma::mat Y, const arma::mat hs, const arma::umat indices_1, const arma::umat indices_2);
 RcppExport SEXP _biosensors_usc_cpp_nadayara_regression(SEXP XSEXP, SEXP tSEXP, SEXP YSEXP, SEXP hsSEXP, SEXP indices_1SEXP, SEXP indices_2SEXP) {
@@ -88,8 +56,6 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_biosensors_usc_cpp_wasserstein_regression", (DL_FUNC) &_biosensors_usc_cpp_wasserstein_regression, 6},
-    {"_biosensors_usc_cpp_confidence_band", (DL_FUNC) &_biosensors_usc_cpp_confidence_band, 6},
     {"_biosensors_usc_cpp_nadayara_regression", (DL_FUNC) &_biosensors_usc_cpp_nadayara_regression, 6},
     {"_biosensors_usc_cpp_nadayara_prediction", (DL_FUNC) &_biosensors_usc_cpp_nadayara_prediction, 6},
     {"_biosensors_usc_cpp_ridge_regression", (DL_FUNC) &_biosensors_usc_cpp_ridge_regression, 6},

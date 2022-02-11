@@ -9,11 +9,9 @@
 ## support within Armadillo prefers / requires it
 #CXX_STD = CXX11
 
-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -I../inst/include -I../inst/include/alglib
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -I../inst/include
 PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
-SOURCES = biosensors.usc.cpp RcppExports.cpp alglib/alglibinternal.cpp alglib/alglibmisc.cpp alglib/ap.cpp alglib/linalg.cpp alglib/optimization.cpp alglib/solvers.cpp
+SOURCES = biosensors.usc.cpp RcppExports.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
-#SOURCES = $(wildcard alglib/*.cpp)
-#OBJECTS = biosensors.usc.o RcppExports.o $(SOURCES:.cpp=.o)

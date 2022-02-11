@@ -22,52 +22,8 @@
 #include <RcppArmadillo.h>
 // [[Rcpp::depends(RcppArmadillo)]]
 
-#include "AlglibSolvers.h"
-#include "WassersteinRegression.h"
 #include "NadarayaRegression.h"
 #include "RidgeRegression.h"
-#include "ConfidenceBand.h"
-
-
-// [[Rcpp::export]]
-Rcpp::List cpp_wasserstein_regression(const arma::mat xfit, const arma::mat q, const arma::mat Q0,
-                 const arma::mat xpred, const arma::vec t, const double qdmin) {
-  bio::regression_struct result = bio::wasserstein_regression(xfit, q, Q0, xpred, t, qdmin);
-  return Rcpp::List::create(
-    Rcpp::Named("q")       = q,
-    Rcpp::Named("Q0")      = Q0,
-    Rcpp::Named("t")       = t,
-    Rcpp::Named("qdmin")   = qdmin,
-    Rcpp::Named("xfit")    = result.xfit,
-    Rcpp::Named("xpred")   = result.xpred,
-    Rcpp::Named("Qfit")    = result.Qfit,
-    Rcpp::Named("Qpred")   = result.Qpred,
-    Rcpp::Named("qfit")    = result.qfit,
-    Rcpp::Named("qpred")   = result.qpred,
-    Rcpp::Named("ffit")    = result.ffit,
-    Rcpp::Named("fpred")   = result.fpred,
-    Rcpp::Named("QP_used") = result.QP_used
-  );
-}
-
-
-
-// [[Rcpp::export]]
-Rcpp::List cpp_confidence_band(const arma::mat xfit, const arma::mat xpred, const arma::mat Q_obs,
-                     const arma::mat q_obs, const arma::vec t_vec, const double alpha) {
-  bio::confidence_struct result = bio::confidence_band(xfit, xpred, Q_obs, q_obs, t_vec, alpha);
-  return Rcpp::List::create(
-    Rcpp::Named("xfit")   = xfit,
-    Rcpp::Named("xpred")  = xpred,
-    Rcpp::Named("Q_obs")  = Q_obs,
-    Rcpp::Named("t_vec")  = t_vec,
-    Rcpp::Named("alpha")  = alpha,
-    Rcpp::Named("Qpred")  = result.Qpred,
-    Rcpp::Named("Q_lx")   = result.Q_lx,
-    Rcpp::Named("Q_ux")   = result.Q_ux,
-    Rcpp::Named("fpred")  = result.fpred
-  );
-}
 
 
 // [[Rcpp::export]]
