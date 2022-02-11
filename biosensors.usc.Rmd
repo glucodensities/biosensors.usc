@@ -73,7 +73,7 @@ You can call the Wasserstein regression, using as predictor the distributional r
 In this example, we use the previously loaded biosensor data and the BMI covariate:
 
 ```{r wass}
-wass = wasserstein_regression(data1, "BMI")
+regm = regmod_regression(data1, "BMI")
 ```
 
 As result, this function returns the fitted regression and plots the residuals of the curves against the fitted values. In addition, the function plots the confidance band of the mean values.
@@ -83,20 +83,9 @@ You can obtain the regression prediction from a kxp matrix of input values for r
 
 ```{r xpred}
 xpred = as.matrix(25)
-pred = wasserstein_prediction(wass, xpred)
-```
-
-Alternatively we can also compute the Wasserstein regression using the regmod regression as follows:  
-
-```{r regm}
-regm = regmod_regression(data1, "BMI")
-```
-
-And the corresponding prediction:
-
-```{r}
 pred = regmod_prediction(regm, xpred)
 ```
+
 
 ### Ridge regression 
 
