@@ -1,11 +1,12 @@
 Package: biosensors.usc
 Encoding: UTF-8
 Type: Package
-Title: biosensors.usc package
+Title: Biosensors.usc: Distributional data analysis techniques for biosensor data
 Version: 1.0
-Date: 2020-05-08
+Date: 2022-02-12
 Author: Juan C. Vidal,
-  Marcos Matabuena
+  Marcos Matabuena,
+  Marta Karas
 Maintainer: Juan C. Vidal <juan.vidal@usc.es>
 Description: Biosensor.usc aims to provide a unified and user-friendly framework for using new 
              distributional representations of biosensors data in different statistical modeling 

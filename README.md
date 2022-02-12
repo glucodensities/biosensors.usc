@@ -24,13 +24,16 @@ Distributional representations are a functional extension of compositional time-
 
 ### Required software and packages
     
-1. R (http://www.r-project.org/)
+1. R (https://www.r-project.org/)
 
-2. R packages: [Rcpp](https://cran.r-project.org/web/packages/Rcpp), 
-[RcppArmadillo](https://cran.r-project.org/web/packages/RcppArmadillo),  [energy](https://cran.r-project.org/web/packages/energy), 
-[fda.usc](https://cran.r-project.org/web/packages/fda.usc), 
-[osqp](https://cran.r-project.org/web/packages/osqp), 
-[truncnorm](https://cran.r-project.org/web/packages/truncnorm), [parallelDist](https://cran.r-project.org/web/packages/parallelDist), 
+2. R packages: 
+[Rcpp](https://CRAN.R-project.org/package=Rcpp), 
+[RcppArmadillo](https://CRAN.R-project.org/package=RcppArmadillo),  
+[energy](https://CRAN.R-project.org/package=energy), 
+[fda.usc](https://CRAN.R-project.org/package=fda.usc), 
+[osqp](https://CRAN.R-project.org/package=osqp), 
+[truncnorm](https://CRAN.R-project.org/package=truncnorm), 
+[parallelDist](https://CRAN.R-project.org/package=parallelDist),
 graphics, stats, methods, utils (required in R >= 2.14).
 
 Please install the required R packages before you install the biosensor.usc package. After the installation of the dependencies, please install the **biosensor.usc** as following steps.
