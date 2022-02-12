@@ -6,11 +6,6 @@
 
 using namespace Rcpp;
 
-#ifdef RCPP_USE_GLOBAL_ROSTREAM
-Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
-Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
-#endif
-
 // cpp_nadayara_regression
 Rcpp::List cpp_nadayara_regression(const arma::mat X, const arma::mat t, const arma::mat Y, const arma::mat hs, const arma::umat indices_1, const arma::umat indices_2);
 RcppExport SEXP _biosensors_usc_cpp_nadayara_regression(SEXP XSEXP, SEXP tSEXP, SEXP YSEXP, SEXP hsSEXP, SEXP indices_1SEXP, SEXP indices_2SEXP) {
