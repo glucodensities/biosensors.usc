@@ -1,7 +1,7 @@
 Package: biosensors.usc
 Encoding: UTF-8
 Type: Package
-Title: Biosensors.usc: Distributional data analysis techniques for biosensor data
+Title: Biosensors.usc: Distributional Data Analysis Techniques for Biosensor Data
 Version: 1.0
 Date: 2022-02-12
 Authors@R: c(
