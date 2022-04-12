@@ -3,7 +3,7 @@ Encoding: UTF-8
 Type: Package
 Title: Distributional Data Analysis Techniques for Biosensor Data
 Version: 1.0
-Date: 2022-02-12
+Date: 2022-04-11
 Authors@R: c(
   person(given ="Juan C.", family ="Vidal", email = "juan.vidal@usc.es", role = c("aut", "cre"),
       comment = c(ORCID = "0000-0002-8682-6772")),
