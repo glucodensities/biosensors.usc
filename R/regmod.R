@@ -225,10 +225,13 @@ regmod_regression <- function(data, response) {
 
 
 representar <- function(aux, aux2, aux3) {
+  oldpar <- par(no.readonly = TRUE)    # code line i
+  on.exit(par(oldpar))                 # code line i + 1
+
   par(mfrow= c(1,3))
-  plot(fdata(aux), main="Contitional mean quantile curve")
-  plot(fdata(aux2), main="Observation quantile curves")
-  plot(fdata(aux2-aux), main="Residual curves")
+  plot(fdata(aux, argvals=seq(0,1,length=dim(aux)[2])), main="Contitional mean quantile curve")
+  plot(fdata(aux2, argvals=seq(0,1,length=dim(aux)[2])), main="Observation quantile curves")
+  plot(fdata(aux2-aux, argvals=seq(0,1,length=dim(aux)[2])), main="Residual curves")
   #plot(fdata(aux3-aux), main="Diff means")
 }
 
@@ -295,10 +298,9 @@ regmod_prediction <- function(data, xpred) {
 
 
   predfinal= cuadratico(predcrudo)
-  plot(fdata(predfinal), main="Wasserstein prediction")
+  plot(fdata(predfinal, argvals=seq(0,1,length=dim(predfinal)[2])), main="Wasserstein prediction")
 
   return(predfinal)
-
 }
 
 

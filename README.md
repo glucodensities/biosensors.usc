@@ -53,7 +53,7 @@ biosensor.usc is an R package which provides:
 
 1) Loading biosensors data from a csv files. 
 
-2) Generating a quantile regression model V + V2 * v + tau * V2 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0.
+2) Generating a quantile regression model V + V2 * v + tau * V3 * Q0 where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0.
 
 3) Performing a Wasserstein regression using a quantile density function.
 

@@ -74,6 +74,9 @@ hypothesis_testing <- function(data1, data2, permutations = 100) {
   minys <- min(c(r1[1], r2[1]))
   maxys <- max(c(r1[2], r2[2]))
 
+  oldpar <- par(no.readonly = TRUE)    # code line i
+  on.exit(par(oldpar))                 # code line i + 1
+
   graphics::par(mfrow = c(1, 1))
 
   graphics::plot(m1, main = "Quantile mean", xlab = "t", ylab = "X(t)", lwd = 1, col = "blue", ylim = c(minys, maxys))

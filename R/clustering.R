@@ -67,6 +67,10 @@ clustering <- function(data, clusters = 3, iter_max = 10, restarts = 1) {
       message("An error occured while clustering the data:\n", e)
     }
   )
+
+  oldpar <- par(no.readonly = TRUE)    # code line i
+  on.exit(par(oldpar))            # code line i + 1
+
   if (is.null(data$densities))
     graphics::par(mfrow = c(result$k, 1))
   else

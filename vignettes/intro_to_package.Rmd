@@ -66,10 +66,12 @@ The load_data function returns a biosensor object.
 This object contains a data frame with biosensor raw data, a functional data object (fdata) with a non-parametric density estimation, a functional data object (fdata) with the empirical quantile estimation, and a data frame with the covariates.
 
 
-We also provide a way to generate biosensor data from the quantile regression model V + V2 * v + tau * V2 * Q0, where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0:
+We also provide a way to generate biosensor data from the quantile regression model V + V2 * v + tau * V3 * Q0, where Q0 is a truncated random variable, v = 2 * X, tau = 2 * X, V ~ Unif(-1, 1), V2 ~ Unif(-1, -1), V3 ~ Unif(0.8, 1.2), and E(V|X) = tau * Q0:
 
 ```{r}
 another_data_example = generate_data(n=100, Qp=100, Xp=5)
+head(another_data_example$variables)
+plot(another_data_example$quantiles, main="Simulated data")
 ```
 
 

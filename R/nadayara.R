@@ -134,6 +134,9 @@ nadayara_regression <- function(data, response) {
   betagal.abs
   ## add extra space to right margin of plot within frame
 
+  oldpar <- par(no.readonly = TRUE)    # code line i
+  on.exit(par(oldpar))                 # code line i + 1
+
   graphics::par(mfrow = c(1, 1))
 
 
@@ -144,6 +147,9 @@ nadayara_regression <- function(data, response) {
   )
 
   graphics::mtext(side = 2, line = 3, "R-square")
+
+  oldpar <- par(no.readonly = TRUE)    # code line i
+  on.exit(par(oldpar))                 # code line i + 1
 
   new_par <- old_par <- par("mar")
   new_par[4] <- old_par[2]
