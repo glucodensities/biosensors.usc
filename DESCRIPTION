@@ -21,7 +21,7 @@ Description: Unified and user-friendly framework for using new
              be used to represent any biosensor data such as ECG or medical imaging such as fMRI.
              Matabuena M, Petersen A, Vidal JC, Gude F. "Glucodensities: A new representation of 
              glucose profiles using distributional data analysis" (2021) 
-             <doi:10.1177/0962280221998064>
+             <doi:10.1177/0962280221998064>.
 Imports: Rcpp, graphics, stats, methods, utils, energy, fda.usc, parallelDist, osqp, truncnorm
 Depends: R (>= 2.15)
 LinkingTo: Rcpp, RcppArmadillo
